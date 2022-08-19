@@ -1,16 +1,25 @@
 const menu_email= document.querySelector('.navbar-email');
 const desktopMenu = document.querySelector('.desktop-menu');
 
+
+
 const burgerMenu= document.querySelector('.menu');
 const mobileMenu = document.querySelector('.mobile-menu');
 
-
+//componentes del carrito
 const carritobutton= document.querySelector('.navbar-shopping-cart');
-const carritoMenu = document.querySelector('.product-detail');
+const shoppingCartContainer = document.querySelector('.shoping-product-detail');
 
 
+//Componentes del detalle de productos
 const cardsContainer = document.querySelector('.cards-container');
+const productDetail =document.querySelector('.product-detail');
+const btn_productdetailclosed=document.querySelector('.product-detail-close');
 
+
+
+
+//-------------------------------------------
 
 menu_email.addEventListener('click',toggleDesktopMenu);
 function toggleDesktopMenu(){
@@ -20,25 +29,32 @@ function toggleDesktopMenu(){
 burgerMenu.addEventListener('click',toggleMobileMenu);
 function toggleMobileMenu(){
     
-    const isAsideClosed= carritoMenu.classList.contains('inactive');
+    const isAsideClosed= shoppingCartContainer.classList.contains('inactive');
 
     if(!isAsideClosed){
-        carritoMenu.classList.add('inactive');
+        shoppingCartContainer.classList.add('inactive');
     }
     mobileMenu.classList.toggle('inactive');
 }
 
-carritobutton.addEventListener('click',togglecarritoMenu);
-function togglecarritoMenu(){
+carritobutton.addEventListener('click',toggleshoppingCartContainer);
+function toggleshoppingCartContainer(){
     const ismobileMenuClosed= mobileMenu.classList.contains('inactive');
     
-
     if(!ismobileMenuClosed){
         mobileMenu.classList.add('inactive');
     }
 
-    carritoMenu.classList.toggle('inactive');
+    shoppingCartContainer.classList.toggle('inactive');
 }
+
+
+
+btn_productdetailclosed.addEventListener('click',toggleProductDetail);
+function toggleProductDetail(){
+  productDetail.classList.toggle('inactive');
+}
+
 
 
 const productList = [];
@@ -65,6 +81,12 @@ productList.push({
 
 
 
+
+function  mostrardetallesdeproducto(){
+  productDetail.classList.remove('inactive');
+}
+
+
 function renderProductlist(arr){
 
     for(product of arr){
@@ -75,6 +97,8 @@ function renderProductlist(arr){
         //Creo el elemento de la imagen del producto
         const productImg = document.createElement('img');
         productImg.setAttribute('src',product.image);
+
+        productImg.addEventListener('click',mostrardetallesdeproducto());
 
         const productInfo = document.createElement('div');
         productInfo.classList.add('product-info');
@@ -100,9 +124,9 @@ function renderProductlist(arr){
         productInfo.appendChild(productInfoDiv);
         productInfo.appendChild(productInfoFigure);
   
-       productCard.appendChild(productImg);
+        productCard.appendChild(productImg);
         productCard.appendChild(productInfo);
-  
+
         cardsContainer.appendChild(productCard);
     }
 
